@@ -3,8 +3,8 @@ pragma solidity ^0.8.0;
 
 import {IERC3156FlashLender} from '@openzeppelin/contracts/interfaces/IERC3156FlashLender.sol';
 import {IPoolAddressesProvider} from '@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol';
-import {IGhoFacilitator} from '../../../gho/interfaces/IGhoFacilitator.sol';
-import {IGhoToken} from '../../../gho/interfaces/IGhoToken.sol';
+import {IGhoFacilitator} from './IGhoFacilitator.sol';
+import {IGhoToken} from './IGhoToken.sol';
 
 /**
  * @title IGhoFlashMinter

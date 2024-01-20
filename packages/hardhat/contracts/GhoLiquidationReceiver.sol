@@ -8,8 +8,8 @@ import "hardhat/console.sol";
 // Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
 //import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/IERC3156FlashBorrower.sol";
-import "@aave/protocol-v3/contracts/interfaces/IPool.sol";
+import "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol";
+import  "@aave/core-v3/contracts/interfaces/IPool.sol";
 import "./LiquidationData.sol";
 
 /**
