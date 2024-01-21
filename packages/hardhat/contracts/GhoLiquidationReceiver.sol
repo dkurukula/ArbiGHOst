@@ -1,10 +1,6 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-// TODO: remove
-// Useful for debugging. Remove when deploying to a live network.
-import "hardhat/console.sol";
-
 // Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
 //import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -42,11 +38,8 @@ contract GhoLiquidationReceiver is IERC3156FlashBorrower {
 
         LiquidationData memory liquidationData = abi.decode(data, (LiquidationData));
 
-        // TODO find eth stake for user, compare to this price
-        int ethPrice = priceContract.getChainlinkDataFeedLatestAnswer();
 
-
-        _liquidate(liquidationData);
+        _liquidate(liquidationData, token);
 
         // Repay the flash loan
         uint256 totalAmount = amount + fee;
@@ -55,9 +48,15 @@ contract GhoLiquidationReceiver is IERC3156FlashBorrower {
         return keccak256("ERC3156FlashBorrower.onFlashLoan");
     }
 
-    function _liquidate(LiquidationData memory _liquidationData) internal {
+    function _liquidate(LiquidationData memory _liquidationData, address _token) internal {
         //TODO Interact with AavePoolV3 Pool
         //  liquidationCall(address collateral, address debt, address user, uint256 debtToCover, bool receiveAToken)
-        console.log(_liquidationData.user);
+        // TODO find eth stake for user, compare to this price
+        int ethPrice = priceContract.getChainlinkDataFeedLatestAnswer();
+        uint256 debtToCover = uint256(ethPrice * 10 ** 18);
+
+        aavePool.liquidationCall(_liquidationData.collatoralToken, _token, _liquidationData.user, debtToCover, false);
     }
+
+
 }
