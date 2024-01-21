@@ -39,6 +39,7 @@
   },
   "packageManager": "yarn@3.2.3",
   "dependencies": {
-    "@aave/core-v3": "^1.18.0"
+    "@aave/core-v3": "^1.18.0",
+    "@chainlink/contracts": "^0.8.0"
   }
 }

@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol";
 import  "@aave/core-v3/contracts/interfaces/IPool.sol";
 import "./LiquidationData.sol";
+import "./ETH_USD.sol";
 
 /**
  * A smart contract that liquidates potisions on Aave v3
@@ -19,13 +20,15 @@ import "./LiquidationData.sol";
 contract GhoLiquidationReceiver is IERC3156FlashBorrower {
     IPool private aavePool;
     address private initator;
+    ETH_USD public priceContract;
 
-	constructor(address _aavePoolAddress, address _initiator) {
-		aavePool = IPool(_aavePoolAddress);
-		initator = _initiator;
-	}
+    constructor(address _aavePoolAddress, address _initiator, address _priceContract) {
+        aavePool = IPool(_aavePoolAddress);
+        initator = _initiator;
+        priceContract = ETH_USD(_priceContract);
+    }
 
-	 function onFlashLoan(
+    function onFlashLoan(
         address initiator,
         address token,
         uint256 amount,
@@ -36,7 +39,12 @@ contract GhoLiquidationReceiver is IERC3156FlashBorrower {
         require(msg.sender == address(aavePool), "Caller is not Aave Lending Pool");
 
         //TODO liquidation logic
+
         LiquidationData memory liquidationData = abi.decode(data, (LiquidationData));
+
+        // TODO find eth stake for user, compare to this price
+        int ethPrice = priceContract.getChainlinkDataFeedLatestAnswer();
+
 
         _liquidate(liquidationData);
 
@@ -48,8 +56,8 @@ contract GhoLiquidationReceiver is IERC3156FlashBorrower {
     }
 
     function _liquidate(LiquidationData memory _liquidationData) internal {
-		//TODO Interact with AavePoolV3 Pool
-		//  liquidationCall(address collateral, address debt, address user, uint256 debtToCover, bool receiveAToken)
-		console.log(_liquidationData.user);
+        //TODO Interact with AavePoolV3 Pool
+        //  liquidationCall(address collateral, address debt, address user, uint256 debtToCover, bool receiveAToken)
+        console.log(_liquidationData.user);
     }
 }
