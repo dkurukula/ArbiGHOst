@@ -18,13 +18,11 @@ import "./LiquidationData.sol";
  */
 contract GhoLiquidationReceiver is IERC3156FlashBorrower {
     IPool private aavePool;
-    address private constant GHO_TOKEN = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
-    address private constant ETH_TOKEN = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE; // ETH Token address
+    address private initator;
 
-	// Mainnet GhoFlashMinter 0xb639D208Bcf0589D54FaC24E655C79EC529762B8
-	constructor(address _aavePoolAddress, address _ghoFlashMintAddress) {
+	constructor(address _aavePoolAddress, address _initiator) {
 		aavePool = IPool(_aavePoolAddress);
-		ghoFlashMinter = IGhoFlashMinter(_ghoFlashMintAddress);
+		initator = _initiator;
 	}
 
 	 function onFlashLoan(
@@ -38,9 +36,9 @@ contract GhoLiquidationReceiver is IERC3156FlashBorrower {
         require(msg.sender == address(aavePool), "Caller is not Aave Lending Pool");
 
         //TODO liquidation logic
-        LiquidationData memory liquidationData = abi.decode(data, (LiquidationData))
+        LiquidationData memory liquidationData = abi.decode(data, (LiquidationData));
 
-        _liquidate(liquidationData)
+        _liquidate(liquidationData);
 
         // Repay the flash loan
         uint256 totalAmount = amount + fee;
@@ -49,11 +47,9 @@ contract GhoLiquidationReceiver is IERC3156FlashBorrower {
         return keccak256("ERC3156FlashBorrower.onFlashLoan");
     }
 
-	//TODO
-    function _liquidate(LiquidationData _liquidationData) internal {
+    function _liquidate(LiquidationData memory _liquidationData) internal {
 		//TODO Interact with AavePoolV3 Pool
 		//  liquidationCall(address collateral, address debt, address user, uint256 debtToCover, bool receiveAToken)
-
+		console.log(_liquidationData.user);
     }
-
 }
