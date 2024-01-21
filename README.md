@@ -39,7 +39,12 @@ This is the straight forward case.
 
 ### With Eth
 - use ETH to mint GHO at 1USD
-- sell GHO on DEX for more than 1USD, get more ETH back than spent to mint GHO 
+- sell GHO on DEX for more than 1USD, get more ETH back than spent to mint GHO
+
+### Pre-Requisites :
+You will need to install the following dependencies :
+* yarn add @openzeppelin/contracts
+* yarn add @aave/core-v3
 
 
 ---
