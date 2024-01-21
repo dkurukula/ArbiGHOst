@@ -34,8 +34,13 @@
     "usehooks-ts@^2.7.2": "patch:usehooks-ts@npm:^2.7.2#./.yarn/patches/usehooks-ts-npm-2.7.2-fceffe0e43.patch"
   },
   "devDependencies": {
+    "@bgd-labs/aave-address-book": "^2.17.0",
     "husky": "~8.0.3",
     "lint-staged": "~13.2.2"
   },
-  "packageManager": "yarn@3.2.3"
+  "packageManager": "yarn@3.2.3",
+  "dependencies": {
+    "@aave/core-v3": "^1.18.0",
+    "@chainlink/contracts": "^0.8.0"
+  }
 }

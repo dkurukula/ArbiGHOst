@@ -1,6 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { Contract } from "ethers";
+import { AaveV3Sepolia } from "@bgd-labs/aave-address-book";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -8,7 +9,7 @@ import { Contract } from "ethers";
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployGhoLiquidationReceiver: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   /*
     On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
 
@@ -21,11 +22,13 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   */
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
+  const CUSTOM_PRICE_CONTRACT_SEPOLIA = "0xdd5783BD8634E03A9c2327a7F941131ED46bEc04";
 
-  await deploy("YourContract", {
+  await deploy("GhoLiquidationReceiver", {
     from: deployer,
     // Contract constructor arguments
-    args: [deployer],
+    // TODO update with constructor args for chain
+    args: [AaveV3Sepolia, deployer, CUSTOM_PRICE_CONTRACT_SEPOLIA],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
@@ -33,12 +36,12 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
 
   // Get the deployed contract to interact with it after deploying.
-  const yourContract = await hre.ethers.getContract<Contract>("YourContract", deployer);
-  console.log("👋 Initial greeting:", await yourContract.greeting());
+  const GhoLiquidationReceiver = await hre.ethers.getContract<Contract>("GhoLiquidationReceiver", deployer);
+  console.log("deployed at address: ", GhoLiquidationReceiver.getAddress());
 };
 
-export default deployYourContract;
+export default deployGhoLiquidationReceiver;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+deployGhoLiquidationReceiver.tags = ["GhoLiquidationReceiver"];
