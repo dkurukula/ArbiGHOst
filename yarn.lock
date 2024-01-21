@@ -194,6 +194,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@bgd-labs/aave-address-book@npm:^2.17.0":
+  version: 2.17.0
+  resolution: "@bgd-labs/aave-address-book@npm:2.17.0"
+  checksum: 6958de514e51841d090426c111573a092434e3d883763609990e0567a027ea0822a74d7fab307efac75d69ece65dc634da5d06ca10cd307f55113a19e885e4b6
+  languageName: node
+  linkType: hard
+
 "@chainlink/contracts@npm:^0.8.0":
   version: 0.8.0
   resolution: "@chainlink/contracts@npm:0.8.0"
@@ -11753,6 +11760,7 @@ __metadata:
   resolution: "se-2@workspace:."
   dependencies:
     "@aave/core-v3": ^1.18.0
+    "@bgd-labs/aave-address-book": ^2.17.0
     "@chainlink/contracts": ^0.8.0
     husky: ~8.0.3
     lint-staged: ~13.2.2
